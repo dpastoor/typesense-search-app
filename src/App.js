@@ -7,9 +7,30 @@ import TypesenseApi from './api'
 
 let tsa = new TypesenseApi('localhost', "gatsbyserver", "8108", "http")
 
-const resultRenderer = ({slug, nav_target}) => {
-return <Label content={ slug } key={slug} />
+const categoryReducer = (results) => results.reduce((acc, value) => {
+  if (Object.hasOwnProperty(acc, value.slug)) {
+      let results = acc[value.slug];
+      results = results.concat(value.snippets.map((s) => {
+          return {snippet: s, branch: value.branch, nav_target: value.nav_target, slug: value.slug}
+      }))
+      acc[value.slug] = results;
+      return acc
+  }
+  acc[value.slug] = {
+      results: value
+      .snippets
+      .map((s) => {
+          return {snippet: s, branch: value.branch, nav_target: value.nav_target, slug: value.slug}
+      }),
+      name: value.slug
+  }
+  return acc
+}, {})
+
+const resultRenderer = ({slug, nav_target, snippet}) => {
+return <div dangerouslySetInnerHTML={{__html: snippet}} /> 
 }
+const categoryRenderer = ({ name }) => <Label as={'span'} content={name.split("/")[1]} />
 
 
 class SearchExampleCategory extends Component {
@@ -25,8 +46,8 @@ class SearchExampleCategory extends Component {
     tsa
       .getSearchResults(value)
       .then(result => {
-        console.log(JSON.stringify(result, null, 2))
-        this.setState({value, results: result})
+        console.log(JSON.stringify(categoryReducer(result), null, 2))
+        this.setState({value, results: categoryReducer(result)})
       })
   }
   render() {
@@ -36,12 +57,14 @@ class SearchExampleCategory extends Component {
       <Grid>
         <Grid.Column width={8}>
           <Search
+          category
             loading={isLoading}
             onResultSelect={this.handleResultSelect}
             onSearchChange={_.debounce(this.handleSearchChange, 500, {leading: true})}
             value={value}
             results={results}
             resultRenderer={resultRenderer}
+            categoryRenderer={categoryRenderer}
             minCharacters={1}
             {...this.props}/>
         </Grid.Column>
