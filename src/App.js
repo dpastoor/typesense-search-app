@@ -7,8 +7,8 @@ import TypesenseApi from './api'
 
 let tsa = new TypesenseApi('localhost', "gatsbyserver", "8108", "http")
 
-const resultRenderer = ({ slug }) => {
-return <Label content={ slug } />
+const resultRenderer = ({slug, nav_target}) => {
+return <Label content={ slug } key={slug} />
 }
 
 
@@ -25,6 +25,7 @@ class SearchExampleCategory extends Component {
     tsa
       .getSearchResults(value)
       .then(result => {
+        console.log(JSON.stringify(result, null, 2))
         this.setState({value, results: result})
       })
   }
@@ -35,13 +36,13 @@ class SearchExampleCategory extends Component {
       <Grid>
         <Grid.Column width={8}>
           <Search
-            category
             loading={isLoading}
             onResultSelect={this.handleResultSelect}
             onSearchChange={_.debounce(this.handleSearchChange, 500, {leading: true})}
             value={value}
-            resultRenderer={(props) => (<div> {JSON.stringify(props, null, 2)} </div>)}
-            minCharacters={2}
+            results={results}
+            resultRenderer={resultRenderer}
+            minCharacters={1}
             {...this.props}/>
         </Grid.Column>
         <Grid.Column width={8}>
