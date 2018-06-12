@@ -43,7 +43,7 @@ const resultRenderer = ({slug, snippets, branch, nav_target}) => {
       <Segment.Group>
       {snippets.map((snippet) => {
       return (
-      <Segment key={snippet}
+      <Segment compact key={snippet}
       onClick={(e) => {
         e.preventDefault()
         console.log(slug, nav_target)
