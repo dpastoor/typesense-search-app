@@ -11,8 +11,22 @@ export default class TypesenseApi {
             },
             'timeoutSeconds': 2
         })
-        this.getSearchResults = this.getSearchResults.bind(this)
+        this.getSearchResults = this
+            .getSearchResults
+            .bind(this)
     }
+
+    /**
+* SearchResult transformed from typesense document
+ * @typedef {Object} SearchResult
+ * @property {string[]} snippets
+ * @property {string} branch
+ * @property {string} slug
+ * @property {string} nav_target
+ *
+     * @param {string} searchString
+     * @returns {SearchResult[]}
+     */
     async getSearchResults(searchString) {
         let searchParameters = {
             'q': searchString,
