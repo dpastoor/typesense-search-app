@@ -3,3 +3,10 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+/* 
+ semantic ui search results max at 18em, overriding 
+ */
+.ui.search>.results {
+  width: 85vw
+  !important
+}
