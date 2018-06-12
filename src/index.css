@@ -7,6 +7,6 @@ body {
  semantic ui search results max at 18em, overriding 
  */
 .ui.search>.results {
-  width: 85vw
-  !important
+  width: 85vw  !important;
+  margin-left: 7.5vw;
 }
