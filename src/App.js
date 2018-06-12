@@ -13,10 +13,11 @@ return <Label content={ slug } />
 
 
 class SearchExampleCategory extends Component {
-  componentWillMount() {
-    this.resetComponent()
+  state = {
+    isLoading: false,
+    results: [],
+    value: ''
   }
-
   resetComponent = () => this.setState({isLoading: false, results: [], value: ''})
 
   handleResultSelect = (e, {result}) => console.log("selected ", result)
@@ -35,12 +36,12 @@ class SearchExampleCategory extends Component {
       <Grid>
         <Grid.Column width={8}>
           <Search
-            category
             loading={isLoading}
             onResultSelect={this.handleResultSelect}
             onSearchChange={_.debounce(this.handleSearchChange, 500, {leading: true})}
             value={value}
-            resultRenderer={(props) => (<div> {JSON.stringify(props, null, 2)} </div>)}
+            resultRenderer={resultRenderer}
+            results={results}
             minCharacters={2}
             {...this.props}/>
         </Grid.Column>
