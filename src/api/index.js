@@ -1,5 +1,5 @@
 const Typesense = require('typesense');
-
+require('babel-polyfill')
 export default class TypesenseApi {
     constructor(url, apikey, port = "8108", protocol = "http") {
         this.client = new Typesense.Client({
@@ -22,6 +22,7 @@ export default class TypesenseApi {
  * @property {string[]} snippets
  * @property {string} branch
  * @property {string} slug
+ * @property {string} source
  * @property {string} nav_target
  *
      * @param {string} searchString
@@ -40,7 +41,7 @@ export default class TypesenseApi {
         return data
             .hits
             .map(d => {
-                return {snippets: d.highlights[0].snippets, branch: d.document.branch, slug: d.document.slug, nav_target: d.document.nav_target}
+                return {snippets: d.highlights[0].snippets, source: d.document.source, branch: d.document.branch, slug: d.document.slug, nav_target: d.document.nav_target}
             });
     }
 }
