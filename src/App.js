@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 // import './App.css';
 import 'semantic-ui-css/semantic.min.css';
 import _ from 'lodash'
-import {Search, Grid, Header, Label, Segment} from 'semantic-ui-react'
+import {Search, Label, Segment} from 'semantic-ui-react'
 import TypesenseApi from './api'
 import URL from 'url-parse'
 // set typesense api
