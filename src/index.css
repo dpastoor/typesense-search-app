@@ -5,8 +5,16 @@ body {
 }
 /* 
  semantic ui search results max at 18em, overriding 
+ hard coding the positioning expecting the search bar to be top right
+ so margin-left is set to approximately center it
  */
-.ui.search>.results {
-  width: 85vw  !important;
-  margin-left: 7.5vw;
+.ui.search > .results {
+  width: 65vw !important;
+  max-height: 50vh !important;
+  overflow: scroll;
+  margin: 0 auto;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  margin-left: -50vw;
 }
