@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "babel-polyfill": "^6.26.0",
     "faker": "^4.1.0",
     "lodash": "^4.17.10",
     "react": "^16.4.0",
@@ -10,7 +11,8 @@
     "react-scripts": "1.1.4",
     "semantic-ui-css": "^2.3.1",
     "semantic-ui-react": "^0.80.2",
-    "typesense": "^0.1.4"
+    "typesense": "^0.1.4",
+    "url-parse": "^1.4.1"
   },
   "scripts": {
     "start": "react-scripts start",
