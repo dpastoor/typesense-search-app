@@ -120,9 +120,16 @@ class TypesenseSearch extends Component {
 
   handleResultSelect = (e, {result}) => {
     let {slug, nav_target, source} = result
-    // originally tried to do a full slug#nav_target
-    let navTo = `${pathPrefix}${navSlug(slug, nav_target)}`;
-    console.log("nav to ", navTo);
+    // make sure only trailing slash on path prefix 
+    if (pathPrefix[0] == "/" && pathPrefix.length > 1) {
+      pathPrefix = pathPrefix.slice(1)
+    }
+    if (pathPrefix.length > 1) {
+      if (pathPrefix[pathPrefix.length - 1] !== "/") {
+        pathPrefix += "/"
+      }
+    }
+    let navTo = `${window.location.origin}/${pathPrefix}${navSlug(slug, nav_target)}`;
     window.location = navTo;
   }
 
