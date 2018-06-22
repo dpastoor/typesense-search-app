@@ -38,8 +38,10 @@ export default class TypesenseApi {
             .collections('content')
             .documents()
             .search(searchParameters)
+        // for now only return master branch results
         return data
             .hits
+            .filter(d => d.branch === "master")
             .map(d => {
                 return {id: d.id, snippets: d.highlights[0].snippets, source: d.document.source, branch: d.document.branch, slug: d.document.slug, nav_target: d.document.nav_target}
             });
