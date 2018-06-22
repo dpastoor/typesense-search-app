@@ -54,8 +54,7 @@ const categoryReducer = (results) => results.reduce((acc, value) => {
 const resultRenderer = ({slug, snippets, branch, nav_target}) => {
   return (
     <div style={{
-      display: "block",
-      width: "80vw"
+      display: "block"
     }}>
       <Label content={navSlug(slug, nav_target)}/>
       <span style={{
@@ -70,7 +69,7 @@ const resultRenderer = ({slug, snippets, branch, nav_target}) => {
                 onClick={(e) => {
                 e.preventDefault()
               }}>
-                <div
+                <p
                   dangerouslySetInnerHTML={{
                   __html: snippet
                 }}/>
