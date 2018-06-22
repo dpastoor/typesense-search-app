@@ -120,7 +120,7 @@ class TypesenseSearch extends Component {
   handleResultSelect = (e, {result}) => {
     let {slug, nav_target, source} = result
     // make sure only trailing slash on path prefix 
-    if (pathPrefix[0] == "/" && pathPrefix.length > 1) {
+    if (pathPrefix[0] === "/" && pathPrefix.length > 1) {
       pathPrefix = pathPrefix.slice(1)
     }
     if (pathPrefix.length > 1) {
