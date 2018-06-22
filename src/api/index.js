@@ -41,7 +41,7 @@ export default class TypesenseApi {
         return data
             .hits
             .map(d => {
-                return {snippets: d.highlights[0].snippets, source: d.document.source, branch: d.document.branch, slug: d.document.slug, nav_target: d.document.nav_target}
+                return {id: d.id, snippets: d.highlights[0].snippets, source: d.document.source, branch: d.document.branch, slug: d.document.slug, nav_target: d.document.nav_target}
             });
     }
 }
