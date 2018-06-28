@@ -51,7 +51,7 @@ const categoryReducer = (results) => results.reduce((acc, value) => {
   return acc
 }, {})
 
-const resultRenderer = ({slug, snippets, branch, nav_target}) => {
+const resultRenderer = ({slug, snippet, branch, nav_target}) => {
   return (
     <div style={{
       display: "block"
@@ -61,8 +61,6 @@ const resultRenderer = ({slug, snippets, branch, nav_target}) => {
         textAlign: "left"
       }}>
         <Segment.Group>
-          {snippets.map((snippet) => {
-            return (
               <Segment
                 compact
                 key={snippet}
@@ -74,8 +72,6 @@ const resultRenderer = ({slug, snippets, branch, nav_target}) => {
                   __html: snippet
                 }}/>
               </Segment>
-            )
-          })}
         </Segment.Group>
       </span>
     </div>

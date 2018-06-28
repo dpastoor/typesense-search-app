@@ -31,7 +31,9 @@ export default class TypesenseApi {
     async getSearchResults(searchString) {
         let searchParameters = {
             'q': searchString,
-            'query_by': 'data'
+            'query_by': 'data',
+            filter_by: "branch:[master]",
+            per_page: 100,
         }
         let data = await this
             .client
@@ -39,11 +41,12 @@ export default class TypesenseApi {
             .documents()
             .search(searchParameters)
         // for now only return master branch results
-        return data
-            .hits
-            .filter(d => d.document.branch === "master")
-            .map(d => {
-                return {id: d.id, snippets: d.highlights[0].snippets, source: d.document.source, branch: d.document.branch, slug: d.document.slug, nav_target: d.document.nav_target}
-            });
+        let results = data
+        .hits
+        //.filter(d => d.document.branch === "master")
+        .map(d => {
+            return {id: d.document.id, snippet: d.highlights[0].snippet, source: d.document.source, branch: d.document.branch, slug: d.document.slug, nav_target: d.document.nav_target}
+        });
+        return  results
     }
 }
