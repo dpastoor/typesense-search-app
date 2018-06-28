@@ -5,9 +5,12 @@ import _ from 'lodash'
 import {Search, Label, Segment} from 'semantic-ui-react'
 import TypesenseApi from './api'
 import URL from 'url-parse'
-// set typesense api
-let TYPESENSE_CONFIG = process.env.TYPESENSE_CONFIG;
-let pathPrefix = process.env.TYPESENSE_PATH_PREFIX || "";
+// set typesense api configuration
+// requires REACT_APP prefixes per
+// https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/README.md#adding-custom-environment-variables
+let TYPESENSE_CONFIG = process.env.REACT_APP_TYPESENSE_SERVER_URL;
+console.log("typesense config set to: ", TYPESENSE_CONFIG)
+let pathPrefix = process.env.REACT_APP_TYPESENSE_PATH_PREFIX || "";
 
 const navSlug = (slug, nav_target) => {
   if (nav_target === "root") {
@@ -94,20 +97,23 @@ class TypesenseSearch extends Component {
     if (TYPESENSE_CONFIG !== undefined) {
       // TODO: check if this actually parses
       let configUrl = new URL(TYPESENSE_CONFIG)
-      console.log("config for typesense: ", configUrl)
       let protocol = configUrl.protocol;
       if (protocol[protocol.length - 1] === ":") {
         protocol = protocol.slice(0, -1)
       }
+      if (configUrl.port === "") {
+        configUrl.set("port", protocol === "https" ? "443" : "8108")
+      }
       // TODO: port and api key credential
-      tsc = new TypesenseApi(configUrl.hostname, "gatsbyserver", "8108", protocol)
+      tsc = new TypesenseApi(configUrl.hostname + configUrl.pathname, "gatsbyserver", configUrl.port, protocol)
     } else {
       console.log("using window information for typesense")
       let protocol = window.location.protocol;
       if (protocol[protocol.length - 1] === ":") {
         protocol = protocol.slice(0, -1)
       }
-      tsc = new TypesenseApi(window.location.hostname, "gatsbyserver", "8108", protocol)
+      let port = protocol === "https" ? "443" : "8108"
+      tsc = new TypesenseApi(window.location.hostname, "gatsbyserver", port, protocol)
     }
     this.setState({tsc})
   }
